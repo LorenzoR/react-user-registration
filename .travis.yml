@@ -23,6 +23,7 @@ before_install:
   - pip install awscli
   - npm install -g wait-on
   - echo "REACT_APP_API_ENDPOINT=$TEST_API_ENDPOINT" > .env.local # Set API endpoint to test
+  - echo "REACT_APP_API_ENDPOINT=$PROD_API_ENDPOINT" > .env.production # Set API endpoint for prod
 
 install:
   - npm install
