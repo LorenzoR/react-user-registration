@@ -29,6 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "cypress": "./node_modules/cypress/bin/cypress run",
     "deploy-s3": "aws s3 sync build/ s3://user-registration-lr --acl public-read"
   },
   "eslintConfig": {

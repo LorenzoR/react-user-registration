@@ -1,8 +1,11 @@
-sudo: required
-dist: trusty
-language: node_js
-node_js:
-  - 'stable'
+dist: xenial
+env:
+  global:
+    # include $HOME/.local/bin for `aws`
+    - PATH=$HOME/.local/bin:$PATH
+#language: node_js
+#node_js:
+#  - 'stable'
 branches:
   only:
     - master
@@ -10,26 +13,13 @@ cache:
   directories:
     - node_modules
 before_install:
-  - pyenv global 3.7.1
-  - pip install -U pip
+  - sudo pip install --upgrade pip
   - pip install awscli
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
-  - aws s3 sync s3://travis-build-stages-shared-storage-test/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
-  - npm update
 
 install:
   - npm install
-  - npm i -g react-deploy-cli
+
+script:
+  - npm run cypress
   - npm run build
-
-before_script:
-  - export RELEASE_HEAD=$(git rev-parse --short HEAD | cut -c1-7)  
-  - export RELEASE_HEAD_LONG=$(git rev-parse HEAD)  
-  - export CI=false
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: react-deploy deploy $TRAVIS_BRANCH && react-deploy list $TRAVIS_BRANCH && react-deploy activate $RELEASE_HEAD $TRAVIS_BRANCH
-  on:
-    branch: ["master"]
+  - npm run deploy-s3
