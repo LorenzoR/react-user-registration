@@ -28,8 +28,12 @@ install:
   - npm install
   # - npm run start &
 
-script:
+before_script:
   - npm start & wait-on http://localhost:3000
+
+script:
   - npm run cypress
+
+after_success:
   - npm run build
   - npm run deploy-s3
