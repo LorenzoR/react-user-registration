@@ -21,12 +21,15 @@ cache:
 before_install:
   - sudo pip install --upgrade pip
   - pip install awscli
+  - npm install -g wait-on
+  - echo "REACT_APP_API_ENDPOINT=$TEST_API_ENDPOINT" > .env.local # Set API endpoint to test
 
 install:
   - npm install
-  - npm run start &
+  # - npm run start &
 
 script:
+  - npm start & wait-on http://localhost:3000
   - npm run cypress
   - npm run build
   - npm run deploy-s3
