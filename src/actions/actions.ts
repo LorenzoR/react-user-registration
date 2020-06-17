@@ -37,7 +37,13 @@ function register(user: User) {
         dispatch({ type: FINAL_STEP_OK });
       })
       .catch(error => {
-        dispatch(failure(error));
+        let errorMsg = error.message;
+
+        if (error.response && error.response.data) {
+          errorMsg = error.response.data;
+        }
+
+        dispatch(failure(errorMsg));
         dispatch({ type: FINAL_STEP_ERROR });
       });
     }
@@ -49,7 +55,7 @@ function register(user: User) {
   function success() {
     return { type: REGISTER_SUCCESS };
   }
-  function failure(error: any) {
-    return { type: REGISTER_FAILURE, error };
+  function failure(error: string) {
+    return { type: REGISTER_FAILURE, payload: error };
   }
 }

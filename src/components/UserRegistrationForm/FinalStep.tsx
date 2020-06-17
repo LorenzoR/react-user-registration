@@ -25,7 +25,7 @@ const FinalStep = () => {
   } else {
     if (error) {
       const header = 'Error!';
-      const content = 'Please try again later.';
+      const content = error.length > 0 ? error : 'Please try again later.';
       return <ErrorMessage header={header} content={content} />;
     } else {
       const header = 'Registration Succesfull!';

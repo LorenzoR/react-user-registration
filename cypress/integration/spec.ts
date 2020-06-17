@@ -4,6 +4,33 @@
 /// <reference types="cypress" />
 // @ts-check
 
+const userEmail = `something+test${new Date().getTime()}@email.com`;
+
+const registerUser = (email: string) => {
+  cy.visit('http://localhost:3000');
+
+    // Wait for title
+    cy.contains('h3', 'User Registration', { timeout: 10000 });
+
+    // Title
+    cy.get('.center').should('be.visible')
+      .and('have.text', 'User Registration');
+
+    // Name and email
+    cy.get('#input-name').type('A Name');
+    cy.get('#input-email').type(email);
+
+    // Next
+    cy.get('#btn-step-1-next').click();
+
+    // Passwords
+    cy.get('#input-password').type('S0m3SecretPassword!');
+    cy.get('#input-password-repeat').type('S0m3SecretPassword!');
+
+    // Submit
+    cy.get('#btn-step-2-submit').click();
+}
+
 describe('User registration', () => {
   it('shows name and email', function () {
     cy.visit('http://localhost:3000');
@@ -43,31 +70,19 @@ describe('User registration', () => {
   });
 
   it('can register a user', function () {
-    cy.visit('http://localhost:3000');
-
-    // Wait for title
-    cy.contains('h3', 'User Registration', { timeout: 10000 });
-
-    // Title
-    cy.get('.center').should('be.visible')
-      .and('have.text', 'User Registration');
-
-    // Name and email
-    cy.get('#input-name').type('A Name');
-    cy.get('#input-email').type(`something+test${new Date().getTime()}@email.com`);
-
-    // Next
-    cy.get('#btn-step-1-next').click();
-
-    // Passwords
-    cy.get('#input-password').type('S0m3SecretPassword!');
-    cy.get('#input-password-repeat').type('S0m3SecretPassword!');
-
-    // Submit
-    cy.get('#btn-step-2-submit').click();
+    // Register a user
+    registerUser(userEmail);
 
     // Success message
     cy.contains('div', 'Registration Succesfull!', { timeout: 10000 }).should('be.visible');
+  });
+
+  it('can not register a user with the same email', function () {
+    // Register a user
+    registerUser(userEmail);
+
+    // Error message
+    cy.contains('div', 'Error!', { timeout: 10000 }).should('be.visible');
   });
 });
 

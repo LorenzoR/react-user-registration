@@ -17,7 +17,7 @@ export function registration(state = initialState, action: { payload: string, ty
     case ActionTypes.REGISTER_SUCCESS:
       return { registering: false, error: false };
     case ActionTypes.REGISTER_FAILURE:
-      return { registering: false, error: true };
+      return { registering: false, error: action.payload };
     case ActionTypes.SET_EMAIL:
       return { ...state, user: { ...state.user, email: action.payload } };
     case ActionTypes.SET_NAME:
