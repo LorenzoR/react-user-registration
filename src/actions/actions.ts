@@ -34,11 +34,11 @@ function register(user: User) {
         console.log(res);
         console.log(res.data);
         dispatch(success());
-        dispatch({ type: 'FINAL_STEP_OK' });
+        dispatch({ type: FINAL_STEP_OK });
       })
       .catch(error => {
         dispatch(failure(error));
-        dispatch({ type: 'FINAL_STEP_ERROR' });
+        dispatch({ type: FINAL_STEP_ERROR });
       });
     }
   };

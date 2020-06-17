@@ -10,9 +10,9 @@ const initialState = {
 export function formSteps(state = initialState, action: { id: string, type: string }) {
   switch (action.type) {
     case ActionTypes.NEXT_STEP:
-      return { step: state.step + 1 };
+      return { ...state, step: state.step + 1 };
     case ActionTypes.PREV_STEP:
-      return { step: state.step - 1 };
+      return { ...state, step: state.step - 1 };
     case ActionTypes.FINAL_STEP_OK:
       return { step: FINAL_STEP, error: false };
     case ActionTypes.FINAL_STEP_ERROR:

@@ -7,6 +7,8 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
+import * as ActionTypes from '../../actions/actions';
+
 const PASSWORD_MIN_CHARACTERS = 8;
 
 const PasswordForm = () => {
@@ -33,14 +35,14 @@ const PasswordForm = () => {
       });
     } else {
       // Password OK
-      dispatch({ type: 'SET_PASSWORD', payload: password });
+      dispatch({ type: ActionTypes.SET_PASSWORD, payload: password });
 
-      dispatch({ type: 'NEXT_STEP' });
+      dispatch({ type: ActionTypes.NEXT_STEP });
     }
   }
 
   const prevStep = () => {
-    dispatch({ type: 'PREV_STEP' });
+    dispatch({ type: ActionTypes.PREV_STEP });
   }
 
   const passwordIsValid = () => {

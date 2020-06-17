@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -8,10 +8,13 @@ import {
   Input,
 } from 'semantic-ui-react';
 
+import * as ActionTypes from '../../actions/actions';
+
 const EmailAndNameForm = () => {
   // Name and email
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  // Check store for initial value or empty
+  const [email, setEmail] = useState(useSelector((state: any) => state.registration.user.email) || '');
+  const [name, setName] = useState(useSelector((state: any) => state.registration.user.name) || '');
 
   // Error msgs
   const [emailErrorMsg, setEmailErrorMsg] = useState<{ content: string, pointing: string } | null>(null);
@@ -28,9 +31,9 @@ const EmailAndNameForm = () => {
       });
     }
     if (isValidEmail(email)) {
-      dispatch({ type: 'NEXT_STEP' });
-      dispatch({ type: 'SET_NAME', payload: name });
-      dispatch({ type: 'SET_EMAIL', payload: email });
+      dispatch({ type: ActionTypes.NEXT_STEP });
+      dispatch({ type: ActionTypes.SET_NAME, payload: name });
+      dispatch({ type: ActionTypes.SET_EMAIL, payload: email });
     } else {
       setEmailErrorMsg({
         content: 'Please enter a valid email address',
@@ -44,7 +47,7 @@ const EmailAndNameForm = () => {
   }
 
   const isValidEmail = (email: string): boolean => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   };
 
@@ -57,6 +60,7 @@ const EmailAndNameForm = () => {
         label='Name'
         placeholder='Name'
         error={nameErrorMsg}
+        value={name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
       />
       <Form.Field
@@ -66,6 +70,7 @@ const EmailAndNameForm = () => {
         label='Email'
         placeholder='your@email.com'
         error={emailErrorMsg}
+        value={email}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
       />
       <Button id="btn-step-1-next" icon labelPosition='right' onClick={nextStep}>
