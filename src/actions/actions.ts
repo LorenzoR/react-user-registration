@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 
-import Repository from '../services/Repository';
+import RegistrationService from '../services/RegistrationService';
 
 import User from '../models/User';
 
@@ -29,7 +29,7 @@ function register(user: User) {
     if (user) {
       dispatch(request());
 
-      Repository.post('/register', { user })
+      RegistrationService.register(user)
       .then(res => {
         console.log(res);
         console.log(res.data);

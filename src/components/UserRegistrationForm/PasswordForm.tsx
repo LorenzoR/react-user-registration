@@ -79,6 +79,7 @@ const PasswordForm = () => {
   return (
     <Form>
       <Form.Input
+        id='input-password'
         required
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
         label='Password'
@@ -87,6 +88,7 @@ const PasswordForm = () => {
         error={passwordErrorMsg}
       />
       <Form.Input
+        id='input-password-repeat'
         required
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordRepeat(e.target.value)}
         label='Repeat Password'
@@ -98,7 +100,7 @@ const PasswordForm = () => {
         Back
         <Icon name='arrow left' />
       </Button>
-      <Button primary icon labelPosition='right' onClick={submit}>
+      <Button id='btn-step-2-submit' primary icon labelPosition='right' onClick={submit}>
         Submit
         <Icon name='arrow right' />
       </Button>

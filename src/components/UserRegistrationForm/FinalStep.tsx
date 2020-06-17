@@ -15,8 +15,9 @@ const FinalStep = () => {
   const registering = useSelector((state: any) => state.registration.registering);
   const error = useSelector((state: any) => state.registration.error);
 
-  if (!registering) {
+  if (!registering && user) {
     dispatch(userActions.register(user));
+    return <LoadingMessage />;
   }
 
   if (registering) {

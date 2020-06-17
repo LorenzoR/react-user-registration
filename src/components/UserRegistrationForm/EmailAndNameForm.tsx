@@ -51,6 +51,7 @@ const EmailAndNameForm = () => {
   return (
     <Form>
       <Form.Field
+        id='input-name'
         required
         control={Input}
         label='Name'
@@ -59,6 +60,7 @@ const EmailAndNameForm = () => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
       />
       <Form.Field
+        id='input-email'
         required
         control={Input}
         label='Email'
@@ -66,7 +68,7 @@ const EmailAndNameForm = () => {
         error={emailErrorMsg}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
       />
-      <Button icon labelPosition='right' onClick={nextStep}>
+      <Button id="btn-step-1-next" icon labelPosition='right' onClick={nextStep}>
         Next
         <Icon name='arrow right' />
       </Button>
